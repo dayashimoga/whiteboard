@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block head_extra %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site_name }}",
+    "url": "{{ site_url }}",
+    "description": "{{ site_description }}",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ site_url }}/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-content">
+        <h1 class="hero-title">
+            {{ hero_title | safe }}
+        </h1>
+        <p class="hero-subtitle">
+            Browse <strong>{{ total_apis }}+</strong> curated {{ resource_name }} across
+            <strong>{{ total_categories }}</strong> categories.
+            Always free. Always up-to-date.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="search-wrapper" id="search-wrapper">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="search" id="hero-search" class="search-input"
+                    placeholder="Search APIs... (e.g. weather, music, finance)" autocomplete="off"
+                    aria-label="Search APIs">
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-number" id="stat-apis">{{ total_apis }}</span>
+                <span class="stat-label">Free APIs</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="stat-categories">{{ total_categories }}</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Free</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Category Cards -->
+<section class="categories-section" id="categories">
+    <div class="container">
+        <h2 class="section-title">Browse by Category</h2>
+        <p class="section-subtitle">Find the perfect API for your next project</p>
+
+        <div class="category-grid" id="category-grid">
+            {% for cat in categories %}
+            <a href="/category/{{ cat.slug }}.html" class="category-card" id="cat-{{ cat.slug }}">
+                <div class="category-card-inner">
+                    <h3 class="category-name">{{ cat.name }}</h3>
+                    <span class="category-count">{{ cat.count }} API{{ 's' if cat.count != 1 }}</span>
+                </div>
+                <span class="category-arrow">→</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured APIs -->
+<section class="featured-section" id="featured">
+    <div class="container">
+        <h2 class="section-title">Featured APIs</h2>
+        <p class="section-subtitle">Popular and trending APIs to get you started</p>
+
+        <div class="items-grid" id="featured-grid">
+            {% for item in featured_items %}
+            <a href="/item/{{ item.slug }}.html" class="item-card" id="item-{{ item.slug }}">
+                <div class="item-card-header">
+                    <h3 class="item-title">{{ item.title }}</h3>
+                    <span class="item-category-badge">{{ item.category }}</span>
+                </div>
+                <p class="item-desc">{{ item.description | truncate_text }}</p>
+                <div class="item-meta">
+                    <span class="meta-badge {% if item.auth == 'None' %}badge-free{% else %}badge-auth{% endif %}">
+                        {{ '🔓 No Auth' if item.auth == 'None' else '🔐 ' + item.auth }}
+                    </span>
+                    <span class="meta-badge {% if item.https %}badge-https{% else %}badge-http{% endif %}">
+                        {{ '🔒 HTTPS' if item.https else '⚠️ HTTP' }}
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Ad Section -->
+{% if enable_adsense and adsense_publisher_id != 'ca-pub-XXXXXXXXXX' %}
+<section class="ad-section">
+    <div class="container">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="{{ adsense_publisher_id }}"
+            data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+</section>
+{% elif enable_adsense %}
+<section class="ad-section">
+    <div class="container">
+        <div class="ad-placeholder">
+            <span class="ad-placeholder-text">📢 Ad Space — <a href="/docs/SETUP_GUIDE.html">Configure AdSense</a></span>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+        <!-- Fuse.js -->
+        <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const searchInput = document.getElementById('hero-search');
+                if (!searchInput) return;
+
+                let fuse;
+                let originalGridHtml = "";
+                const grid = document.getElementById('featured-grid');
+                if (grid) originalGridHtml = grid.innerHTML;
+
+                // Fetch search index
+                fetch('/search.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        fuse = new Fuse(data, {
+                            keys: ['title', 'description', 'category'],
+                            threshold: 0.3
+                        });
+                    });
+
+                searchInput.addEventListener('input', function (e) {
+                    if (!fuse || !grid) return;
+                    const query = e.target.value.trim();
+
+                    if (!query) {
+                        grid.innerHTML = originalGridHtml;
+                        return;
+                    }
+
+                    const results = fuse.search(query);
+                    if (results.length === 0) {
+                        grid.innerHTML = '<p style="color:white;text-align:center;grid-column:1/-1;">No results found.</p>';
+                        return;
+                    }
+
+                    // Render results
+                    let html = "";
+                    results.slice(0, 12).forEach(res => {
+                        const item = res.item;
+                        html += `
+                <a href="${item.url}" class="item-card">
+                    <div class="item-card-header">
+                        <h3 class="item-title">${item.title}</h3>
+                        <span class="item-category-badge">${item.category || 'Directory'}</span>
+                    </div>
+                    <p class="item-desc">${item.description.substring(0, 100)}...</p>
+                </a>`;
+                    });
+                    grid.innerHTML = html;
+                });
+            });
+        </script>
+
+        {% endblock %}

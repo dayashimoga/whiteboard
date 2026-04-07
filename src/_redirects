@@ -1,0 +1,2 @@
+# Standard Directory Redirects
+/api/* /404.html 302

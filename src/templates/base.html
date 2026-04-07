@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="preload" href="/css/styles.css" as="style">
+
+    <!-- Verification Tags -->
+    {% if google_site_verification %}
+    <meta name="google-site-verification" content="{{ google_site_verification }}">
+    {% endif %}
+
+    {% if pinterest_domain_verify and enable_pinterest %}
+    <meta name="p:domain_verify" content="{{ pinterest_domain_verify }}">
+    {% endif %}
+
+    <!-- Analytics & Monetization -->
+
+
+    <!-- Deployment Trigger V2 -->
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ page_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:image" content="{{ og_image if og_image else site_url + '/images/og-image.png' }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <!-- Pinterest Card -->
+    <meta name="pinterest-rich-pin" content="true">
+    <meta name="twitter:image" content="{{ og_image if og_image else site_url + '/images/og-image.png' }}">
+
+    <link rel="alternate" type="application/rss+xml" title="{{ site_name }} RSS Feed" href="{{ site_url }}/feed.xml">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    {% if ga_measurement_id and ga_measurement_id != 'G-XXXXXXXXXX' %}
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_measurement_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '{{ ga_measurement_id }}');
+    </script>
+    {% endif %}
+
+    {% if enable_adsense and adsense_publisher_id and adsense_publisher_id != 'ca-pub-XXXXXXXXXX' %}
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ adsense_publisher_id }}"
+        crossorigin="anonymous"></script>
+    {% endif %}
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "MOCK_CF_TOKEN"}'></script>
+    
+    <!-- MiniSearch for Client-Side Search -->
+    <script src="https://cdn.jsdelivr.net/npm/minisearch@6.3.0/dist/umd/index.min.js"></script>
+
+    {% block head_extra %}{% endblock %}
+</head>
+
+<body>
+    <!-- Reading Progress Bar -->
+    <div class="reading-progress-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: transparent; z-index: 10000;">
+        <div class="reading-progress-bar" id="reading-progress-bar" style="height: 100%; background: var(--accent, #6366f1); width: 0%; transition: width 0.1s;"></div>
+    </div>
+
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo" id="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">{{ site_name }}</span>
+            </a>
+
+            <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+                <!-- Search Box -->
+                <div class="search-container" style="position: relative; display: flex; align-items: center; margin-right: 1rem;">
+                    <input type="text" id="site-search" placeholder="Search..." autocomplete="off" aria-label="Search"
+                           style="padding: 0.5rem; border-radius: 4px; border: 1px solid #444; background: var(--bg-card); color: var(--text-base); width: 200px;">
+                    <div id="search-results" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid #444; border-top: none; z-index: 1000; max-height: 400px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"></div>
+                </div>
+                <a href="/" class="nav-link">Home</a>
+                <a href="/#categories" class="nav-link">Categories</a>
+                <a href="https://quickutils.top" class="nav-link" target="_blank" rel="noopener">QuickUtils</a>
+                <a href="https://ko-fi.com/dayatin" class="nav-link" target="_blank" rel="noopener" style="color: #ff5e5b; font-weight: 600;">☕ Support Us</a>
+                <a href="https://yourname.gumroad.com/l/submit" class="nav-link nav-cta" id="submit-tool-link">
+                    Submit a Tool
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+                    <span class="theme-icon-dark">🌙</span>
+                    <span class="theme-icon-light">☀️</span>
+                </button>
+
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo-text">{{ site_name }}</span>
+                    </a>
+                    <p class="footer-desc">{{ site_description }}</p>
+                </div>
+
+                <div class="footer-links" style="grid-column: span 1;">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#categories">All Categories</a></li>
+                        <li><a href="/sitemap.xml">Sitemap</a></li>
+                        <li><a href="https://ko-fi.com/dayatin" target="_blank" rel="noopener">☕ Support Our Work</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-links" style="grid-column: span 1;">
+                    <h4>Legal & Info</h4>
+                    <ul>
+                        <li><a href="/privacy.html">Privacy Policy</a></li>
+                        <li><a href="/terms.html">Terms of Use</a></li>
+                        <li><a href="/about.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="footer-links" id="network-footer">
+                    <h4>QuickUtils Network</h4>
+                    <ul>
+                        {% for link in network_links %}
+                        <li><a href="{{ link.url }}" target="_blank" rel="noopener">{{ link.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://quickutils.top" target="_blank" rel="noopener">QuickUtils Home</a></li>
+                        <li><a href="https://github.com/dayashimoga/quickutils-master" target="_blank" rel="noopener">Submit a
+                                Tool (GitHub)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- World Clock -->
+            <div class="world-clock" id="world-clock">
+                <h4 class="clock-title">🌍 World Clock</h4>
+                <div class="clock-grid">
+                    <div class="clock-item"><span class="clock-city">New York</span><span class="clock-time"
+                            data-tz="America/New_York">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">London</span><span class="clock-time"
+                            data-tz="Europe/London">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Dubai</span><span class="clock-time"
+                            data-tz="Asia/Dubai">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Mumbai</span><span class="clock-time"
+                            data-tz="Asia/Kolkata">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Singapore</span><span class="clock-time"
+                            data-tz="Asia/Singapore">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Tokyo</span><span class="clock-time"
+                            data-tz="Asia/Tokyo">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Sydney</span><span class="clock-time"
+                            data-tz="Australia/Sydney">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">São Paulo</span><span class="clock-time"
+                            data-tz="America/Sao_Paulo">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Los Angeles</span><span class="clock-time"
+                            data-tz="America/Los_Angeles">--:--</span></div>
+                    <div class="clock-item"><span class="clock-city">Berlin</span><span class="clock-time"
+                            data-tz="Europe/Berlin">--:--</span></div>
+                </div>
+                <!-- Time Converter -->
+                <div class="time-converter" id="time-converter">
+                    <label class="converter-label">🔄 Convert any time between timezones</label>
+                    <div class="converter-inputs">
+                        <div class="converter-input-group">
+                            <label class="converter-sublabel" for="converter-datetime">Date &amp; Time</label>
+                            <input type="datetime-local" id="converter-datetime" class="converter-input">
+                        </div>
+                        <div class="converter-input-group">
+                            <label class="converter-sublabel" for="converter-from-tz">From</label>
+                            <select id="converter-from-tz" class="converter-select">
+                                <option value="LOCAL" selected>My Local Time</option>
+                                <option value="America/New_York">New York (EST)</option>
+                                <option value="America/Los_Angeles">Los Angeles (PST)</option>
+                                <option value="America/Chicago">Chicago (CST)</option>
+                                <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+                                <option value="Europe/London">London (GMT)</option>
+                                <option value="Europe/Berlin">Berlin (CET)</option>
+                                <option value="Europe/Paris">Paris (CET)</option>
+                                <option value="Asia/Dubai">Dubai (GST)</option>
+                                <option value="Asia/Kolkata">Mumbai (IST)</option>
+                                <option value="Asia/Singapore">Singapore (SGT)</option>
+                                <option value="Asia/Shanghai">Shanghai (CST)</option>
+                                <option value="Asia/Tokyo">Tokyo (JST)</option>
+                                <option value="Australia/Sydney">Sydney (AEST)</option>
+                                <option value="Pacific/Auckland">Auckland (NZST)</option>
+                            </select>
+                        </div>
+                        <span class="converter-arrow-mid">→</span>
+                        <div class="converter-input-group">
+                            <label class="converter-sublabel" for="converter-to-tz">To</label>
+                            <select id="converter-to-tz" class="converter-select">
+                                <option value="America/New_York">New York (EST)</option>
+                                <option value="America/Los_Angeles">Los Angeles (PST)</option>
+                                <option value="America/Chicago">Chicago (CST)</option>
+                                <option value="America/Sao_Paulo">São Paulo (BRT)</option>
+                                <option value="Europe/London">London (GMT)</option>
+                                <option value="Europe/Berlin">Berlin (CET)</option>
+                                <option value="Europe/Paris">Paris (CET)</option>
+                                <option value="Asia/Dubai">Dubai (GST)</option>
+                                <option value="Asia/Kolkata" selected>Mumbai (IST)</option>
+                                <option value="Asia/Singapore">Singapore (SGT)</option>
+                                <option value="Asia/Shanghai">Shanghai (CST)</option>
+                                <option value="Asia/Tokyo">Tokyo (JST)</option>
+                                <option value="Australia/Sydney">Sydney (AEST)</option>
+                                <option value="Pacific/Auckland">Auckland (NZST)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="converter-result" id="converter-result">
+                        <span class="converter-from-display" id="converter-from-display">--:--</span>
+                        <span class="converter-arrow">→</span>
+                        <span class="converter-to-display" id="converter-to-display">--:--</span>
+                    </div>
+                    <button class="converter-now-btn" id="converter-now-btn" type="button">⏱ Use Current Time</button>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; {{ current_year }} {{ site_name }}. Built with ❤️ and automation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Submit Modal -->
+    <div id="submit-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 10001; align-items: center; justify-content: center;">
+        <div style="background: var(--bg-card); padding: 2rem; border-radius: 8px; width: 90%; max-width: 500px; position: relative; color: var(--text-base);">
+            <button id="close-modal" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h2 style="margin-top: 0">Submit a Resource</h2>
+            <form id="submit-form">
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem;">Resource Name</label>
+                    <input type="text" name="name" required style="width: 100%; padding: 0.5rem; background: var(--bg-body); border: 1px solid #444; color: var(--text-base);">
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem;">URL</label>
+                    <input type="url" name="url" required style="width: 100%; padding: 0.5rem; background: var(--bg-body); border: 1px solid #444; color: var(--text-base);">
+                </div>
+                <!-- Cloudflare Turnstile Mock -->
+                <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA" style="margin-bottom: 1rem;"></div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">Submit for Review</button>
+                <div id="submit-message" style="margin-top: 1rem; color: #10b981; display: none;">Successfully submitted! We will review it shortly.</div>
+            </form>
+        </div>
+    </div>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+    <!-- Ko-fi Widget -->
+    {% include 'kofi_widget.html' ignore missing %}
+
+    <script src="/js/main.js"></script>
+    {% block scripts_extra %}{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backToTop = document.createElement('button');
+            backToTop.innerHTML = '↑';
+            backToTop.setAttribute('aria-label', 'Back to top');
+            backToTop.setAttribute('title', 'Back to top');
+            Object.assign(backToTop.style, {
+                position: 'fixed',
+                bottom: '20px',
+                right: '20px',
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                backgroundColor: 'var(--accent, #6366f1)',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '20px',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+                zIndex: '9999',
+                transition: 'opacity 0.3s'
+            });
+            document.body.appendChild(backToTop);
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.style.display = 'flex';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+                
+                // Reading progress bar logic
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+                const progressBar = document.getElementById('reading-progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = scrolled + '%';
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Client-Side Search Logic
+            if (typeof MiniSearch !== 'undefined') {
+                const miniSearch = new MiniSearch({
+                    fields: ['title', 'description', 'category'],
+                    storeFields: ['title', 'description', 'category', 'url', 'slug'],
+                    searchOptions: { boost: { title: 2 }, prefix: true }
+                });
+                
+                fetch('/search.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        data.forEach((d, i) => d.id = i);
+                        miniSearch.addAll(data);
+                    });
+                    
+                const searchInput = document.getElementById('site-search');
+                const searchResults = document.getElementById('search-results');
+                
+                if (searchInput && searchResults) {
+                    searchInput.addEventListener('input', (e) => {
+                        const query = e.target.value;
+                        if (query.length > 2) {
+                            const results = miniSearch.search(query);
+                            if (results.length > 0) {
+                                searchResults.style.display = 'block';
+                                searchResults.innerHTML = results.slice(0, 8).map(r => `
+                                    <a href="${r.url}" style="display: block; padding: 0.75rem; border-bottom: 1px solid #444; text-decoration: none; color: var(--text-base);">
+                                        <div style="font-weight: bold; color: var(--accent);">${r.title} <span style="font-size: 0.8em; color: var(--text-muted); float: right;">${r.category}</span></div>
+                                        <div style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.description}</div>
+                                    </a>
+                                `).join('');
+                            } else {
+                                searchResults.style.display = 'none';
+                            }
+                        } else {
+                            searchResults.style.display = 'none';
+                        }
+                    });
+                    
+                    document.addEventListener('click', (e) => {
+                        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                            searchResults.style.display = 'none';
+                        }
+                    });
+                }
+            }
+
+            // Submit Tool Modal Logic
+            const submitBtn = document.getElementById('submit-tool-link');
+            const submitModal = document.getElementById('submit-modal');
+            const closeModal = document.getElementById('close-modal');
+            const submitForm = document.getElementById('submit-form');
+            const submitMsg = document.getElementById('submit-message');
+
+            if (submitBtn && submitModal) {
+                submitBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    submitModal.style.display = 'flex';
+                });
+                closeModal.addEventListener('click', () => {
+                    submitModal.style.display = 'none';
+                });
+                submitForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Mock Worker Submission
+                    console.log("Mock Submission via CF Worker.");
+                    submitForm.reset();
+                    submitMsg.style.display = 'block';
+                    setTimeout(() => { 
+                        submitModal.style.display = 'none'; 
+                        submitMsg.style.display = 'none'; 
+                    }, 3000);
+                });
+            }
+            
+            // Cookie Consent Logic
+            if (!localStorage.getItem('cookieConsent')) {
+                const cookieBanner = document.createElement('div');
+                cookieBanner.id = 'cookie-consent';
+                Object.assign(cookieBanner.style, {
+                    position: 'fixed',
+                    bottom: '0',
+                    left: '0',
+                    right: '0',
+                    background: '#111',
+                    color: '#fff',
+                    padding: '15px',
+                    textAlign: 'center',
+                    zIndex: '10000',
+                    borderTop: '1px solid #333',
+                    fontSize: '14px'
+                });
+                cookieBanner.innerHTML = `
+                    This website uses cookies to ensure you get the best experience, including personalizing ads via Google AdSense. 
+                    <a href="/privacy.html" style="color: #6366f1; text-decoration: underline;">Learn more</a>
+                    <button id="accept-cookies" style="margin-left: 15px; padding: 5px 15px; background: #6366f1; border: none; color: white; border-radius: 4px; cursor: pointer;">Got it!</button>
+                `;
+                document.body.appendChild(cookieBanner);
+                
+                document.getElementById('accept-cookies').addEventListener('click', () => {
+                    localStorage.setItem('cookieConsent', 'true');
+                    cookieBanner.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

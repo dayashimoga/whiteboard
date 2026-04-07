@@ -1,0 +1,92 @@
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+p_venv/
+.test-venv/
+# Python Cache and Coverage
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.json
+coverage.xml
+.tox/
+.noseids/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build and Distribution
+dist/
+build/
+*.egg-info/
+bin/
+lib/
+include/
+share/
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Logs and Temporary Files
+*.log
+test_error.txt
+test_out_cmd.txt
+link_report.md
+tests_report.txt
+pytest_debug.txt
+pytest_report.txt
+venv_pytest_out.txt
+test_output.txt
+test_output_utf8.txt
+tests_output.txt
+final_test_report.txt
+test_summary.txt
+test_report*.txt
+test_report.txt
+cov_summary.txt
+report.xml
+cov_report.json
+tmp_parse*.py
+temp_*/
+cov_out.txt
+utf8_cov.txt
+coverage-output.txt
+current-test.txt
+fail_detail.txt
+old_projects.json
+# OS and IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# Local Environment Secrets (Always use GH Secrets for production)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+coverage/
+node_modules/
+__pycache__/
+
+build*.txt
+venv_*
+
+# Project Redundancy
+# projects/quickutils-master/
