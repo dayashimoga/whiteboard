@@ -196,6 +196,56 @@
             "SITE_NAME": "Unit Converter",
             "SITE_URL": "https://units.quickutils.top",
             "GA_MEASUREMENT_ID": "G-UNITCONV001"
+        },
+        "circuit-designer": {
+            "SITE_NAME": "Circuit Designer",
+            "SITE_URL": "https://circuits.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-CIRCUITS001"
+        },
+        "color-palette": {
+            "SITE_NAME": "Color Palette Generator",
+            "SITE_URL": "https://colors.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-COLORS00001"
+        },
+        "markdown-editor": {
+            "SITE_NAME": "Markdown Editor",
+            "SITE_URL": "https://markdown.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-MARKDOWN001"
+        },
+        "physics-sandbox": {
+            "SITE_NAME": "Physics Sandbox",
+            "SITE_URL": "https://physics.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-PHYSICS0001"
+        },
+        "math-grapher": {
+            "SITE_NAME": "Math Grapher",
+            "SITE_URL": "https://grapher.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-GRAPHER0001"
+        },
+        "json-explorer": {
+            "SITE_NAME": "JSON Explorer",
+            "SITE_URL": "https://json.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-JSON0000001"
+        },
+        "cron-builder": {
+            "SITE_NAME": "Cron Builder",
+            "SITE_URL": "https://cron.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-CRON0000001"
+        },
+        "emoji-kitchen": {
+            "SITE_NAME": "Emoji Kitchen",
+            "SITE_URL": "https://emoji.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-EMOJI000001"
+        },
+        "ascii-art-studio": {
+            "SITE_NAME": "ASCII Art Studio",
+            "SITE_URL": "https://ascii.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-ASCII000001"
+        },
+        "password-fortress": {
+            "SITE_NAME": "Password Fortress",
+            "SITE_URL": "https://passwords.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-PASSWD00001"
         }
     }
 }
