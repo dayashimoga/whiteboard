@@ -246,6 +246,56 @@
             "SITE_NAME": "Password Fortress",
             "SITE_URL": "https://passwords.quickutils.top",
             "GA_MEASUREMENT_ID": "G-PASSWD00001"
+        },
+        "text-toolkit": {
+            "SITE_NAME": "Text Toolkit",
+            "SITE_URL": "https://text.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-TEXTTOOL001"
+        },
+        "qr-studio": {
+            "SITE_NAME": "QR Studio",
+            "SITE_URL": "https://qr.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-QRSTUDIO01"
+        },
+        "country-explorer": {
+            "SITE_NAME": "Country Explorer",
+            "SITE_URL": "https://countries.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-COUNTRIES01"
+        },
+        "coloring-books": {
+            "SITE_NAME": "Coloring Books",
+            "SITE_URL": "https://coloring.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-COLORING001"
+        },
+        "svg-editor": {
+            "SITE_NAME": "SVG Editor",
+            "SITE_URL": "https://svg.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-SVGEDITOR1"
+        },
+        "network-tools": {
+            "SITE_NAME": "Network Tools",
+            "SITE_URL": "https://nettools.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-NETTOOLS001"
+        },
+        "meal-planner": {
+            "SITE_NAME": "Meal Planner",
+            "SITE_URL": "https://meals.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-MEALS000001"
+        },
+        "invoice-generator": {
+            "SITE_NAME": "Invoice Generator",
+            "SITE_URL": "https://invoices.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-INVOICES001"
+        },
+        "resume-builder": {
+            "SITE_NAME": "Resume Builder",
+            "SITE_URL": "https://resume.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-RESUME00001"
+        },
+        "mind-map": {
+            "SITE_NAME": "Mind Map",
+            "SITE_URL": "https://mindmap.quickutils.top",
+            "GA_MEASUREMENT_ID": "G-MINDMAP0001"
         }
     }
 }

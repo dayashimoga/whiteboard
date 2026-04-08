@@ -1,11 +1,13 @@
-# Python Virtual Environments
+# ══════════════════════════════════════════
+# Python
+# ══════════════════════════════════════════
 .venv/
 venv/
 ENV/
 env/
 p_venv/
 .test-venv/
-# Python Cache and Coverage
+venv_*
 __pycache__/
 *.py[cod]
 *$py.class
@@ -17,14 +19,19 @@ coverage.xml
 .tox/
 .noseids/
 
+# ══════════════════════════════════════════
 # Node.js
+# ══════════════════════════════════════════
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+package-lock.json
 
-# Build and Distribution
+# ══════════════════════════════════════════
+# Build & Distribution
+# ══════════════════════════════════════════
 dist/
 build/
 *.egg-info/
@@ -32,12 +39,14 @@ bin/
 lib/
 include/
 share/
-.terraform/
-*.tfstate
-*.tfstate.backup
 
-# Logs and Temporary Files
+# ══════════════════════════════════════════
+# Coverage & Test Reports
+# ══════════════════════════════════════════
+coverage/
 *.log
+*.tmp
+*.bak
 test_error.txt
 test_out_cmd.txt
 link_report.md
@@ -45,27 +54,39 @@ tests_report.txt
 pytest_debug.txt
 pytest_report.txt
 venv_pytest_out.txt
-test_output.txt
-test_output_utf8.txt
+test_output*.txt
 tests_output.txt
 final_test_report.txt
 test_summary.txt
 test_report*.txt
-test_report.txt
 cov_summary.txt
 report.xml
 cov_report.json
-tmp_parse*.py
-temp_*/
 cov_out.txt
 utf8_cov.txt
 coverage-output.txt
+coverage-summary.txt
 current-test.txt
 fail_detail.txt
 old_projects.json
-# OS and IDE
+build*.txt
+tmp_parse*.py
+temp_*/
+
+# ══════════════════════════════════════════
+# Terraform
+# ══════════════════════════════════════════
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+
+# ══════════════════════════════════════════
+# OS & IDE
+# ══════════════════════════════════════════
 .DS_Store
 Thumbs.db
+desktop.ini
 .vscode/
 .idea/
 *.swp
@@ -74,19 +95,14 @@ Thumbs.db
 .pydevproject
 .settings/
 
-# Local Environment Secrets (Always use GH Secrets for production)
+# ══════════════════════════════════════════
+# Environment & Secrets
+# ══════════════════════════════════════════
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*.local
 
-coverage/
-node_modules/
-__pycache__/
-
-build*.txt
-venv_*
-
-# Project Redundancy
-# projects/quickutils-master/
+# ══════════════════════════════════════════
+# Docker
+# ══════════════════════════════════════════
+.docker/
